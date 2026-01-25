@@ -1,11 +1,12 @@
 import express from "express";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
 app.use(express.json({ limit: "10mb" }));
 
-// needed to resolve file paths on Render
+// resolve paths on Render
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,12 +20,21 @@ app.post("/echo", (req, res) => {
   res.json({ ok: true, received: req.body });
 });
 
-// placeholder for PDF render later
+// render HTML with injected variables (no PDF yet)
 app.post("/render-issue", (req, res) => {
-  res.json({
-    ok: true,
-    message: "HTML + CSS loading works. PDF rendering next.",
-  });
+  const { title, issueNumber } = req.body;
+
+  let html = fs.readFileSync(
+    path.join(__dirname, "template.html"),
+    "utf-8"
+  );
+
+  html = html
+    .replace("{{TITLE}}", title || "Default Title")
+    .replace("{{ISSUE_NUMBER}}", issueNumber || "1");
+
+  res.setHeader("Content-Type", "text/html");
+  res.send(html);
 });
 
 const port = process.env.PORT || 3000;
