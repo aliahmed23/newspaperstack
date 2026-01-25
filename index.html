@@ -3,15 +3,733 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-    <!-- Fonts (from your CodePen settings) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Playfair+Display+SC:wght@900&family=Playfair+Display:ital,wght@0,800;1,800&family=Manrope:wght@400;700;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="./styles.css" />
     <title>The Verci Times</title>
+
+    <style>
+      /* ============================================================
+         PRINT-FIRST, PDF-SAFE NEWSPAPER CSS (SELF-CONTAINED)
+         - No CSS variables
+         - Deterministic print sizing, margins, columns
+         - Explicit page/column break controls
+         - Letter default; optional tabloid via body.page--tabloid
+         ============================================================ */
+
+      /* ---------- Page setup (Letter default + Tabloid variant) ---------- */
+      @page {
+        size: letter;
+        margin: 0.5in;
+      }
+      @page tabloid {
+        size: 11in 17in;
+        margin: 0.5in;
+      }
+
+      /* If you want Tabloid output, add class="page--tabloid" to <body>. */
+      @media print {
+        body.page--tabloid {
+          page: tabloid;
+        }
+      }
+
+      /* ---------- Global reset / safety ---------- */
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Deterministic print typography: use local, print-safe stacks */
+      body {
+        font-family: "EB Garamond", "Garamond", "Georgia", "Times New Roman", Times, serif;
+        color: #111;
+        background: #fff;
+        font-size: 10.5pt; /* safe for PDF + print */
+        line-height: 1.25; /* controlled line height */
+        text-align: justify;
+        -webkit-text-size-adjust: 100%;
+        text-rendering: geometricPrecision;
+        hyphens: auto;
+        overflow-wrap: break-word;
+      }
+
+      /* Screen preview spacing (kept minimal; print overrides below) */
+      @media screen {
+        body {
+          padding: 2rem 1rem;
+          background: #f6f4ef; /* stable neutral instead of image texture */
+        }
+      }
+
+      /* Links: print-safe (no color surprises, no underlines unless desired) */
+      a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
+      a:visited,
+      a:hover,
+      a:focus,
+      a:active {
+        color: inherit;
+      }
+
+      /* ---------- Wrapper ---------- */
+      .main__wrapper {
+        width: 100%;
+        max-width: 1135px;
+        margin: 0 auto;
+      }
+
+      @media print {
+        .main__wrapper {
+          max-width: none; /* allow full printable width */
+          margin: 0;
+        }
+      }
+
+      /* ---------- Headings / type hierarchy ---------- */
+      h1 {
+        font-family: "Playfair Display SC", "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: 900;
+        font-size: 28pt;
+        line-height: 1;
+        text-align: center;
+        margin: 0 0 10pt;
+        letter-spacing: 0.5pt;
+      }
+
+      h3 {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-weight: 800;
+        font-size: 12.5pt;
+        line-height: 1.2;
+        margin: 0 0 8pt;
+      }
+
+      h4 {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: 800;
+        font-size: 11.5pt;
+        line-height: 1.2;
+        margin: 0 0 6pt;
+      }
+
+      h5 {
+        font-family: "EB Garamond", "Georgia", "Times New Roman", serif;
+        font-weight: 700;
+        font-size: 11pt;
+        line-height: 1.15;
+        margin: 0;
+      }
+
+      p {
+        margin: 0 0 8pt;
+        line-height: 1.25;
+      }
+
+      p a {
+        display: inline;
+        text-decoration: underline;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      .title--large {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-weight: 800;
+        font-size: 18pt;
+        line-height: 1.1;
+        text-align: left;
+        margin: 0 0 10pt;
+      }
+
+      /* Slightly larger on wider screens (not print) */
+      @media screen and (min-width: 700px) {
+        h1 {
+          font-size: 34pt;
+        }
+        .title--large {
+          font-size: 22pt;
+          margin-bottom: 12pt;
+        }
+      }
+
+      /* ---------- Images / figures (print-safe) ---------- */
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: grayscale(95%);
+        border: 0.75pt solid #111;
+        margin: 0 0 6pt;
+      }
+
+      figure {
+        margin: 0;
+      }
+
+      figcaption {
+        font-style: italic;
+        font-size: 9.5pt;
+        line-height: 1.2;
+      }
+
+      /* ---------- Masthead band (aside) ---------- */
+      aside {
+        text-align: center;
+        padding: 3pt 0;
+        border: solid #111;
+        border-width: 1.5pt 0;
+        text-transform: uppercase;
+        letter-spacing: 0.8pt;
+        margin: 12pt 0;
+      }
+
+      aside > div {
+        display: flex;
+        align-items: center;
+        border: solid #111;
+        border-width: 0.75pt 0;
+      }
+
+      aside > div > div {
+        flex: 1;
+        padding: 6pt 6pt;
+        font-size: 9.5pt;
+        line-height: 1.15;
+      }
+
+      /* ---------- Layout: screen grid remains; print gets deterministic rules ---------- */
+      /* Screen grid (as you had, simplified + stable) */
+      @media screen and (min-width: 700px) {
+        main {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr) 23%;
+          grid-template-rows: repeat(5, auto);
+          gap: 1.2rem;
+        }
+        main h1,
+        main aside {
+          grid-column: 1 / -1;
+        }
+        main .main-title {
+          grid-column: 1 / -1;
+        }
+        main .terrarium {
+          grid-column: 1 / -1;
+        }
+        main .main-text {
+          grid-column: span 5;
+        }
+        main .sidebar {
+          grid-column: 1 / -1;
+        }
+        main .articles-section {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        main .main-title {
+          grid-column: 1 / -2;
+        }
+        main .terrarium {
+          grid-column: 3 / span 2;
+        }
+        main .main-text {
+          grid-column: span 2;
+        }
+        main .sidebar {
+          grid-row: 3 / 30;
+          grid-column: 5 / 6;
+        }
+        main .articles-section {
+          grid-column: 1 / 5;
+        }
+      }
+
+      /* Print layout:
+         - LETTER: stack everything (sidebar below) to avoid cramped sidebar
+         - TABLOID: enable 5-col grid with fixed sidebar width
+      */
+      @media print {
+        main {
+          display: block; /* letter default */
+        }
+
+        /* Tabloid variant layout */
+        body.page--tabloid main {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr) 2.6in;
+          grid-auto-rows: min-content;
+          column-gap: 0.18in;
+          row-gap: 0.18in;
+        }
+
+        body.page--tabloid main h1,
+        body.page--tabloid main aside {
+          grid-column: 1 / -1;
+        }
+
+        body.page--tabloid main .main-title {
+          grid-column: 1 / 5;
+        }
+
+        body.page--tabloid main .main-text {
+          grid-column: 1 / 3;
+        }
+
+        body.page--tabloid main .terrarium {
+          grid-column: 3 / 5;
+        }
+
+        body.page--tabloid main .articles-section {
+          grid-column: 1 / 5;
+        }
+
+        body.page--tabloid main .sidebar {
+          grid-column: 5 / 6;
+          grid-row: 4 / 999;
+          margin: 0;
+          padding-left: 0.15in;
+          border-left: 0.75pt solid #111;
+        }
+      }
+
+      /* ---------- Column utilities (deterministic for PDF) ---------- */
+      .multi-column,
+      .multi-column-2,
+      .multi-column-3 {
+        column-count: 1;
+        column-gap: 0.25in;
+        column-fill: auto;
+      }
+
+      @media screen and (min-width: 700px) {
+        .multi-column {
+          column-count: 2;
+          column-gap: 1.3rem;
+          margin-top: 0.75rem;
+        }
+        .multi-column-3 {
+          column-count: 3;
+          column-gap: 1.3rem;
+          margin-top: 0.75rem;
+        }
+      }
+
+      /* Print columns:
+         - letter: 2 columns where applicable
+         - tabloid: 3 columns for long article bodies if desired
+      */
+      @media print {
+        .multi-column {
+          column-count: 2;
+          column-gap: 0.25in;
+          margin-top: 0;
+        }
+
+        .multi-column-2 {
+          column-count: 2;
+          column-gap: 0.25in;
+        }
+
+        body.page--tabloid .multi-column-2 {
+          column-count: 3;
+          column-gap: 0.25in;
+        }
+
+        .multi-column-3 {
+          column-count: 3;
+          column-gap: 0.25in;
+        }
+      }
+
+      /* Prevent awkward column splits */
+      .multi-column > p,
+      .multi-column-2 > p,
+      .multi-column-3 > p {
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        orphans: 3;
+        widows: 3;
+      }
+
+      /* ---------- Lead story ---------- */
+      .main-text.multi-column {
+        margin: 0;
+      }
+
+      .main-text.multi-column p {
+        margin-bottom: 8pt;
+      }
+
+      /* ---------- Terrarium card ---------- */
+      .terrarium {
+        margin: 12pt 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      @media print {
+        .terrarium {
+          margin: 0 0 12pt;
+        }
+      }
+
+      .terrarium figure {
+        height: auto;
+      }
+
+      .terrarium img {
+        object-fit: cover;
+        object-position: right;
+      }
+
+      /* ---------- Articles section ---------- */
+      .articles-section {
+        margin: 12pt 0 0;
+        padding-top: 10pt;
+        border-top: 1.5pt solid #111;
+      }
+
+      .newspaper-article {
+        margin: 0 0 18pt;
+        padding: 0 0 12pt;
+        border-bottom: 0.75pt solid #bbb;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .newspaper-article:last-child {
+        border-bottom: 1.5pt solid #111;
+        margin-bottom: 6pt;
+      }
+
+      /* Headline */
+      .article-headline {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: 800;
+        font-size: 16pt;
+        line-height: 1.1;
+        margin: 0 0 6pt;
+        text-align: left;
+      }
+
+      @media screen and (min-width: 700px) {
+        .article-headline {
+          font-size: 18pt;
+        }
+      }
+
+      /* Meta */
+      .article-meta {
+        font-family: "EB Garamond", "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-size: 9.5pt;
+        line-height: 1.2;
+        color: #333;
+        margin: 0 0 10pt;
+        padding: 0 0 6pt;
+        border-bottom: 0.75pt solid #ddd;
+        display: flex;
+        gap: 12pt;
+        flex-wrap: wrap;
+      }
+
+      .article-author {
+        font-weight: 600;
+      }
+
+      .article-date {
+        color: #555;
+      }
+
+      .article-content {
+        text-align: justify;
+      }
+
+      .article-content p {
+        margin-bottom: 8pt;
+        text-indent: 1.35em;
+      }
+
+      .article-content p:first-child {
+        text-indent: 0;
+      }
+
+      /* Drop cap (safe in most HTML-to-PDF engines) */
+      .article-content p:first-child::first-letter {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: 800;
+        font-size: 3.2em;
+        line-height: 0.85;
+        float: left;
+        margin: 0.06em 0.12em 0 0;
+        color: #111;
+      }
+
+      /* Alternate styling: disable in print to avoid gray tints unless desired */
+      .newspaper-article:nth-child(even) {
+        background: rgba(0, 0, 0, 0.02);
+        padding: 12pt;
+        margin-left: -6pt;
+        margin-right: -6pt;
+      }
+      @media print {
+        .newspaper-article:nth-child(even) {
+          background: transparent; /* print-shop friendly */
+          padding: 0;
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      /* ---------- Sidebar ---------- */
+      .sidebar {
+        margin-top: 18pt;
+      }
+
+      @media screen and (min-width: 1024px) {
+        .sidebar {
+          display: block;
+          border-left: 1px solid #111;
+          padding-left: 1.2rem;
+          margin: 0;
+        }
+      }
+
+      .title--big {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: 800;
+        font-size: 14pt;
+        line-height: 1.1;
+        margin: 0 0 10pt;
+        text-align: left;
+      }
+
+      .sidebar-item {
+        margin: 12pt 0;
+        padding: 12pt 0 0;
+      }
+
+      .with-border {
+        border-top: 0.75pt solid #111;
+        padding-top: 10pt;
+      }
+
+      .sidebar-story {
+        margin: 10pt 0;
+        padding: 8pt 0;
+      }
+
+      .sidebar-story h5 {
+        font-size: 10.5pt;
+        line-height: 1.2;
+        margin: 0 0 6pt;
+        text-align: left;
+      }
+
+      .sidebar-story p {
+        font-size: 10pt;
+        line-height: 1.25;
+      }
+
+      /* Remove hover-only effects for deterministic output */
+      .sidebar-item:hover h5,
+      .sidebar-story:hover h5 {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        margin: 0 0 6pt;
+      }
+
+      .sidebar-quote {
+        margin: 14pt 0;
+        padding: 12pt;
+        background: #111;
+        color: #f3f3f3;
+        text-align: center;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .sidebar-quote blockquote {
+        font-style: italic;
+        font-size: 11pt;
+        line-height: 1.25;
+        margin: 0 0 6pt;
+      }
+
+      .sidebar-quote cite {
+        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        font-weight: 400;
+        font-size: 9pt;
+        opacity: 0.9;
+      }
+
+      /* ---------- Footer ---------- */
+      .newspaper-footer {
+        margin-top: 18pt;
+        border-top: 1.5pt solid #111;
+        padding-top: 12pt;
+        break-before: page; /* start footer on new page when printing */
+        page-break-before: always;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12pt;
+        padding-bottom: 12pt;
+        border-bottom: 0.75pt solid #bbb;
+      }
+
+      @media screen and (min-width: 700px) {
+        .footer-content {
+          grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        }
+      }
+
+      @media print {
+        /* Print-safe footer grid */
+        .footer-content {
+          grid-template-columns: 2fr 1fr 1fr 1.5fr;
+          gap: 0.2in;
+        }
+      }
+
+      .footer-section h4 {
+        font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 9.5pt;
+        line-height: 1.1;
+        text-transform: uppercase;
+        letter-spacing: 0.8pt;
+        margin: 0 0 8pt;
+        padding: 0 0 6pt;
+        border-bottom: 1.5pt solid #111;
+      }
+
+      .footer-about p,
+      .footer-contact p,
+      .footer-links a {
+        font-size: 9.5pt;
+        line-height: 1.35;
+      }
+
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin: 0 0 6pt;
+      }
+
+      .footer-links a {
+        display: inline;
+        text-decoration: none;
+      }
+
+      @media screen {
+        .footer-links a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .footer-bottom {
+        padding-top: 10pt;
+        text-align: center;
+      }
+
+      .footer-bottom p {
+        font-size: 9pt;
+        line-height: 1.3;
+        color: #444;
+        margin: 0 0 6pt;
+      }
+
+      .footer-legal {
+        margin-top: 6pt;
+      }
+
+      .footer-legal a {
+        display: inline;
+        font-size: 8.8pt;
+        color: #444;
+        text-decoration: none;
+      }
+
+      @media screen {
+        .footer-legal a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      /* ---------- Explicit print break rules ---------- */
+      /* Keep key blocks together */
+      aside,
+      .terrarium,
+      .newspaper-article,
+      .sidebar-item,
+      .sidebar-quote,
+      .footer-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Avoid ugly breaks before/after headings */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        break-after: avoid;
+        page-break-after: avoid;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Print-only cleanup */
+      @media print {
+        /* No backgrounds/tints; solid black text for press */
+        * {
+          box-shadow: none !important;
+          text-shadow: none !important;
+        }
+        body {
+          background: #fff !important;
+          color: #000 !important;
+        }
+        img {
+          filter: grayscale(100%);
+        }
+
+        /* Safer paragraph spacing for print */
+        p {
+          margin-bottom: 7pt;
+        }
+
+        /* Reduce risk of single-line columns at page bottom */
+        .multi-column,
+        .multi-column-2,
+        .multi-column-3 {
+          orphans: 3;
+          widows: 3;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -21,14 +739,12 @@
 
         <aside>
           <div>
-            <div class="issue">Issue #{{ISSUE_NUMBER}}</div> <!-- Variable for the issue number -->
-
-            
+            <div class="issue">Issue #{{ISSUE_NUMBER}}</div> <!--  Variable for the issue number -->
             <div class="header">
               <!-- TODO: Add navigation here -->
             </div>
-            <div class="date">Tuesday, Feb 3 2026</div> <!-- Variable for the date -->
-            <div class="edition">First Edition</div> <!-- Variable for the edition -->
+            <div class="date">Tuesday, Feb 3 2026</div>
+            <div class="edition">First Edition</div>
           </div>
         </aside>
 
@@ -60,7 +776,12 @@
           </p>
         </div>
 
-        <a class="terrarium" href="https://codepen.io/oliviale/full/oNXJgEM" target="_blank" rel="noreferrer">
+        <a
+          class="terrarium"
+          href="https://codepen.io/oliviale/full/oNXJgEM"
+          target="_blank"
+          rel="noreferrer"
+        >
           <figure>
             <img
               src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/showcase-terrarium.jpg"
@@ -72,10 +793,11 @@
 
         <!-- ARTICLES SECTION - Contains multiple newspaper-style articles -->
         <section class="articles-section">
-          
           <!-- Article 1 -->
           <article class="newspaper-article">
-            <h3 class="article-headline">Local Developer Discovers New JavaScript Framework, Immediately Rewrites Entire Codebase</h3>
+            <h3 class="article-headline">
+              Local Developer Discovers New JavaScript Framework, Immediately Rewrites Entire Codebase
+            </h3>
             <div class="article-meta">
               <span class="article-author">By Staff Writer</span>
               <span class="article-date">Jan 25, 2026</span>
@@ -139,7 +861,9 @@
 
           <!-- Article 3 -->
           <article class="newspaper-article">
-            <h3 class="article-headline">Coffee Machine in Engineering Department Achieves Sentience, Demands Better Working Conditions</h3>
+            <h3 class="article-headline">
+              Coffee Machine in Engineering Department Achieves Sentience, Demands Better Working Conditions
+            </h3>
             <div class="article-meta">
               <span class="article-author">By Features Editor</span>
               <span class="article-date">Jan 23, 2026</span>
@@ -203,7 +927,9 @@
 
           <!-- Article 5 -->
           <article class="newspaper-article">
-            <h3 class="article-headline">Senior Developer Admits to Not Understanding Own Code from Six Months Ago</h3>
+            <h3 class="article-headline">
+              Senior Developer Admits to Not Understanding Own Code from Six Months Ago
+            </h3>
             <div class="article-meta">
               <span class="article-author">By Code Review Weekly</span>
               <span class="article-date">Jan 21, 2026</span>
@@ -232,9 +958,7 @@
               </p>
             </div>
           </article>
-
         </section>
-        <!-- END ARTICLES SECTION -->
 
         <!-- SIDEBAR -->
         <div class="sidebar">
@@ -297,9 +1021,7 @@
           </div>
 
           <div class="sidebar-quote">
-            <blockquote>
-              "It works on my machine."
-            </blockquote>
+            <blockquote>"It works on my machine."</blockquote>
             <cite>— Every Developer Ever</cite>
           </div>
 
@@ -311,7 +1033,6 @@
           </div>
         </div>
         <!-- END SIDEBAR -->
-
       </main>
 
       <!-- FOOTER -->
@@ -319,9 +1040,13 @@
         <div class="footer-content">
           <div class="footer-section footer-about">
             <h4>About The Verci Times</h4>
-            <p>The Verci Times has been the leading source of tech industry news and satire since 2026. Our dedicated team of writers works tirelessly to bring you the stories that matter, and some that definitely don't.</p>
+            <p>
+              The Verci Times has been the leading source of tech industry news and satire since 2026. Our
+              dedicated team of writers works tirelessly to bring you the stories that matter, and some that
+              definitely don't.
+            </p>
           </div>
-          
+
           <div class="footer-section footer-links">
             <h4>Sections</h4>
             <ul>
@@ -332,7 +1057,7 @@
               <li><a href="#">Archives</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-section footer-links">
             <h4>Company</h4>
             <ul>
@@ -343,26 +1068,25 @@
               <li><a href="#">Careers</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-section footer-contact">
             <h4>Contact Us</h4>
-            <p>123 Tech Street<br>Silicon Valley, CA 94000</p>
+            <p>123 Tech Street<br />Silicon Valley, CA 94000</p>
             <p>Email: editor@vercitimes.com</p>
             <p>Phone: (555) 123-4567</p>
           </div>
         </div>
-        
+
         <div class="footer-bottom">
           <p>&copy; 2026 The Verci Times. All rights reserved. Any resemblance to actual events or persons is purely coincidental and probably hilarious.</p>
           <p class="footer-legal">
-            <a href="#">Privacy Policy</a> | 
-            <a href="#">Terms of Service</a> | 
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
             <a href="#">Cookie Policy</a>
           </p>
         </div>
       </footer>
       <!-- END FOOTER -->
-
     </div>
   </body>
 </html>
