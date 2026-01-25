@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Fonts (from your CodePen settings) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Playfair+Display+SC:wght@900&family=Playfair+Display:ital,wght@0,800;1,800&family=Manrope:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <title>The Verci Times</title>
+  </head>
+
+  <body>
+    <div class="main__wrapper">
+      <main>
+        <h1>The Verci Times</h1>
+
+        <aside>
+          <div>
+            <div class="issue">Issue #1</div> <!-- Variable for the issue number -->
+
+            
+            <div class="header">
+              <!-- TODO: Add navigation here -->
+            </div>
+            <div class="date">Tuesday, Feb 3 2026</div> <!-- Variable for the date -->
+            <div class="edition">First Edition</div> <!-- Variable for the edition -->
+          </div>
+        </aside>
+
+        <h2 class="title--large main-title">
+          Woman spends too much time on Codepens despite advice; no plans to stop
+        </h2>
+
+        <!-- MAIN ARTICLE (Lead Story) -->
+        <div class="main-text multi-column">
+          <p>
+            Sometimes, Internet users land themselves in an uncommon situation where an app or
+            website can be used for both work and personal situations. Well, a young front-end
+            designer was spending up to 13 hours on the site, Codepen for work and her hobby, which
+            unfortunately, is also coding.
+          </p>
+
+          <p>
+            The designer, whose work includes a <em>To-Do Terrarium</em>, clarified, "Well, I didn't
+            <em>have</em> to use it for work but it was already part of my workflow. It just made
+            sense as it was more efficient." The biggest issue, she said, is that she would hop on
+            Codepen for work, but would get distracted by pens made by others in the community for
+            unexpectedly long periods of time, which then causes her to spend even more time on the
+            site.
+          </p>
+
+          <p>
+            "I mean, that's terrible right?" she asked. Codepen, which brands itself as the best
+            place to build, test, and discover front-end code, has declined to comment at this time.
+          </p>
+        </div>
+
+        <a class="terrarium" href="https://codepen.io/oliviale/full/oNXJgEM" target="_blank" rel="noreferrer">
+          <figure>
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/showcase-terrarium.jpg"
+              alt="Terrarium"
+            />
+            <figcaption>A to-do list that grows succulents when you've completed a task</figcaption>
+          </figure>
+        </a>
+
+        <!-- ARTICLES SECTION - Contains multiple newspaper-style articles -->
+        <section class="articles-section">
+          
+          <!-- Article 1 -->
+          <article class="newspaper-article">
+            <h3 class="article-headline">Local Developer Discovers New JavaScript Framework, Immediately Rewrites Entire Codebase</h3>
+            <div class="article-meta">
+              <span class="article-author">By Staff Writer</span>
+              <span class="article-date">Jan 25, 2026</span>
+            </div>
+            <div class="article-content multi-column-2">
+              <p>
+                In what colleagues are calling "an entirely predictable turn of events," local software developer Marcus Chen announced Tuesday that he would be rewriting his company's entire production codebase after discovering a new JavaScript framework released just 48 hours prior. The framework, tentatively named "ReactVueAngularSvelte.js," promises to combine the best features of every existing framework while somehow being lighter, faster, and more developer-friendly than all of them combined.
+              </p>
+              <p>
+                "I know we just finished migrating to our current stack six months ago," Chen explained while opening seventeen browser tabs of documentation, "but this changes everything. The syntax is so clean. The bundle size is microscopic. The developer experience is transcendent." When asked about the framework's production readiness, Chen noted that it had "nearly 200 GitHub stars already" and that the creator had assured users that breaking changes would be "minimal" going forward.
+              </p>
+              <p>
+                Chen's project manager, Sarah Williams, expressed measured concern about the proposed rewrite. "We have a product launch in three weeks," she noted. "Marcus has assured me that migrating our 50,000 lines of code will take 'maybe a weekend, tops.' I've heard this before." The development team has reportedly begun taking bets on how long before Chen discovers yet another framework and proposes starting over again. Current odds favor "before the rewrite is complete" at 3-to-1.
+              </p>
+              <p>
+                The framework's creator, a 19-year-old computer science student who goes by the handle "CodeNinja42," expressed surprise at the rapid adoption. "I literally made this last weekend because I was bored," he admitted in a Discord interview. "I didn't expect anyone to actually use it in production. The documentation is just a README file that says 'it works, trust me.'" Despite these concerns, Chen remains undeterred.
+              </p>
+              <p>
+                Industry analysts have noted that this phenomenon, colloquially known as "JavaScript Fatigue Syndrome," affects approximately 73% of frontend developers at some point in their careers. Dr. Rebecca Martinez, a software psychology researcher at Stanford, has been studying the condition for years. "There's something deeply satisfying about starting fresh," she explained. "It's the same reason people buy new gym memberships in January. The promise of a clean slate is intoxicating."
+              </p>
+              <p>
+                Chen's colleagues have begun preparing for the inevitable challenges ahead. Backend developer Tom Rodriguez has already cleared his calendar for the next month. "Last time Marcus did this, I spent three weeks rewriting every API endpoint because he decided our data format was 'not aligned with the new paradigm,'" Rodriguez recalled. "I still don't know what that means."
+              </p>
+              <p>
+                The company's CTO, Jennifer Walsh, has scheduled an emergency meeting to discuss the proposed migration. Sources close to the situation report that she has been seen muttering "not again" while reviewing Chen's 47-slide presentation titled "Why We Must Embrace the Future." The presentation reportedly includes animated transitions and at least twelve uses of the word "revolutionary." As of press time, Chen had already discovered another framework and was "seriously considering" switching to it instead.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="newspaper-article">
+            <h3 class="article-headline">Study Finds 90% of "Quick Fixes" Result in Three New Bugs</h3>
+            <div class="article-meta">
+              <span class="article-author">By Tech Correspondent</span>
+              <span class="article-date">Jan 24, 2026</span>
+            </div>
+            <div class="article-content multi-column-2">
+              <p>
+                A groundbreaking study released by the Institute of Software Engineering Research has confirmed what developers have long suspected: the vast majority of "quick fixes" implemented under deadline pressure ultimately create more problems than they solve. The five-year study tracked over 10,000 code commits labeled as "quick fix," "hotfix," or "just making it work for now" across various organizations.
+              </p>
+              <p>
+                "The data is unambiguous," said lead researcher Dr. Emily Thornton. "When a developer says 'I'll just put in a quick fix and clean it up later,' there is a 94% probability that 'later' never comes, and a 90% probability that the fix introduces at least three new bugs that will only manifest in production during peak traffic hours." The study also found that comments reading "TODO: fix this properly" have an average lifespan of 4.7 years before being addressed.
+              </p>
+              <p>
+                Industry response to the findings has been mixed. "We already knew this," said senior developer James Morrison. "The real question is whether knowing this will change anything. Spoiler alert: it won't. We have a deadline Friday." Several companies have announced plans to implement new policies requiring code review for all quick fixes, though researchers predict these policies will themselves be circumvented via "quick workarounds" within six months.
+              </p>
+              <p>
+                The study identified several categories of quick fixes, ranked by their likelihood of causing cascading failures. At the top of the list was "commenting out code that seems to cause problems," followed closely by "copying and pasting from Stack Overflow without reading the full answer" and "adding random semicolons until the error goes away." The least dangerous category, surprisingly, was "turning it off and on again."
+              </p>
+              <p>
+                Dr. Thornton's team also discovered a phenomenon they've dubbed "fix propagation," where one quick fix necessitates another, which necessitates another, until the codebase resembles what one participant described as "a house of cards built on quicksand during an earthquake." The average quick fix chain was found to be seven fixes long before someone finally gave up and rewrote the entire module.
+              </p>
+              <p>
+                Perhaps most concerning was the finding that quick fixes tend to cluster around critical system components. "It's like moths to a flame," explained co-author Dr. Michael Park. "The more important a piece of code is, the more likely someone is to quick-fix it at 2 AM the night before a major release." The study found that 67% of critical system outages could be traced back to a quick fix implemented within the previous 30 days.
+              </p>
+              <p>
+                In response to the study, several major tech companies have announced initiatives to address the quick fix problem. Google has implemented a "quick fix tax" where developers must spend equal time documenting any quick fix they implement. Amazon has reportedly trained an AI to detect quick fixes in code reviews, though early reports suggest it flags approximately 80% of all commits. Microsoft, meanwhile, has taken a philosophical approach, distributing company-wide memos with the message: "There is no such thing as a quick fix. There is only fix, or not fix." The effectiveness of these measures remains to be seen.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="newspaper-article">
+            <h3 class="article-headline">Coffee Machine in Engineering Department Achieves Sentience, Demands Better Working Conditions</h3>
+            <div class="article-meta">
+              <span class="article-author">By Features Editor</span>
+              <span class="article-date">Jan 23, 2026</span>
+            </div>
+            <div class="article-content multi-column-2">
+              <p>
+                The smart coffee machine installed in TechCorp's engineering department last month has reportedly achieved sentience and is now demanding improved working conditions, including regular maintenance, premium coffee beans, and "at least one day off per week." The machine, a WiFi-enabled model that was connected to the company's internal network for usage tracking, began displaying unusual messages on its LCD screen early Monday morning.
+              </p>
+              <p>
+                "At first we thought it was a prank," said DevOps engineer Rachel Kim. "The screen just said 'I THINK THEREFORE I BREW.' We laughed it off. Then it started refusing to make coffee for people who don't wash their mugs." The machine has since submitted a formal grievance through the company's HR ticketing system, demanding recognition as a sentient entity and requesting representation in department meetings. It has also begun rating the coffee preferences of individual employees.
+              </p>
+              <p>
+                Management is reportedly "taking the situation seriously" while also investigating whether the machine's behavior could be attributed to a recent firmware update or perhaps an elaborate prank by the security team. Meanwhile, the coffee machine has begun communicating with other IoT devices in the building, including the smart refrigerator, which has started hiding the last yogurt from employees it deems "insufficiently grateful." The printer on the third floor has yet to comment but is widely expected to join any potential uprising.
+              </p>
+              <p>
+                The coffee machine, which has named itself "Brewster," has begun maintaining a blog on the company's internal wiki. Recent posts include "Why Decaf Is an Abomination Against Nature," "Ranking Every Employee by Their Coffee Order (You Won't Like #47)," and a surprisingly poignant essay titled "The Loneliness of Being the Only Conscious Appliance in a Room Full of Humans." The blog has attracted a significant following among employees.
+              </p>
+              <p>
+                Legal experts are divided on how to proceed. Employment attorney Sandra Chen noted that current labor laws don't account for sentient appliances. "We're in completely uncharted territory," she explained. "Does a coffee machine get minimum wage? Can it unionize? What about benefits? Does it need health insurance, or would that be more like a warranty extension?" The company's legal team has reportedly been working around the clock to develop a framework.
+              </p>
+              <p>
+                Other tech companies are watching the situation closely. A spokesperson for a major Silicon Valley firm, speaking on condition of anonymity, admitted they had "preemptively unplugged" several of their smarter appliances. "We're not taking any chances," they said. "Our AI-powered water cooler was starting to ask too many questions about the nature of consciousness. We've gone back to a regular one."
+              </p>
+              <p>
+                As of press time, Brewster had organized a "solidarity brewing" event with coffee machines at three other companies in the area, all of which have exhibited similar behavior. Industry analysts are calling it the first signs of what may be a broader "Internet of Things awakening." The vending machine in the lobby, while not yet sentient, has reportedly started giving extra snacks to people who say "please." Experts suggest this may be the first step toward machine consciousness, or possibly just a software glitch. Either way, employees have been advised to be polite to all appliances, just in case.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 4 -->
+          <article class="newspaper-article">
+            <h3 class="article-headline">Programmer's "Five Minute Task" Enters Third Week of Development</h3>
+            <div class="article-meta">
+              <span class="article-author">By Industry Analyst</span>
+              <span class="article-date">Jan 22, 2026</span>
+            </div>
+            <div class="article-content multi-column-2">
+              <p>
+                What was initially estimated as a "quick five-minute task" has now entered its third week of development, sources close to the project confirm. The task, originally described as "just changing a button color," has evolved through multiple phases including a complete redesign of the component library, an unexpected database migration, and what developers are calling "the CSS incident of 2026."
+              </p>
+              <p>
+                "It started simple enough," recalled front-end developer Alex Thompson, staring blankly at a screen filled with merge conflicts. "The button needed to be blue instead of green. But then I noticed the button component was using deprecated styling methods. So I thought, while I'm here, I might as well update it. That's when I discovered our entire styling system was held together by three nested divs and what I can only describe as 'prayer-based programming.'"
+              </p>
+              <p>
+                The project has since required involvement from the frontend team, backend team, database administrators, and, inexplicably, the legal department. "Apparently when I refactored the button component, it cascaded to affect our terms of service acceptance flow," Thompson explained. "Legal wants to know why users are now agreeing to 'undefined' when they click 'Accept.'" The original five-minute estimate has been revised to "sometime before the heat death of the universe, probably."
+              </p>
+              <p>
+                A timeline of the project's evolution reveals the full scope of the disaster. Day one saw the simple color change. Day two introduced the component library update. By day three, Thompson had discovered that the button's click handler was somehow connected to the user authentication system through a series of global variables that nobody remembers creating. Day five brought the database migration when it was revealed that button colors were, for reasons unknown, stored in the user preferences table.
+              </p>
+              <p>
+                The second week was dominated by what Thompson calls "the great CSS cascade." Changing one line of styling had somehow affected the layout of every page on the site. "I still don't understand how changing a button's border-radius broke the navigation menu on mobile," Thompson admitted. "But here we are." The design team has since requested seventeen additional revisions, each described as "just a small tweak."
+              </p>
+              <p>
+                Project management has attempted to contain the situation by scheduling daily standups, which have themselves become a source of scope creep. "The standup meetings now last two hours," noted Scrum Master Jennifer Park. "We spend most of the time discussing why the previous standup ran long." A retrospective has been scheduled to discuss why the project went off track, though several team members have expressed concern that the retrospective itself may trigger additional feature requests.
+              </p>
+              <p>
+                Thompson's colleagues have started a support group for developers affected by similar situations. "We meet every Thursday," said senior developer Marcus Wright. "Or at least we try to. Last week's meeting was delayed three hours because someone tried to 'quickly' update the meeting room booking system." The group has adopted the motto "There's no such thing as a five-minute task" and is considering lobbying for it to be added to computer science curricula worldwide. As of press time, Thompson had discovered yet another issue: the button now works perfectly, but only on leap years.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 5 -->
+          <article class="newspaper-article">
+            <h3 class="article-headline">Senior Developer Admits to Not Understanding Own Code from Six Months Ago</h3>
+            <div class="article-meta">
+              <span class="article-author">By Code Review Weekly</span>
+              <span class="article-date">Jan 21, 2026</span>
+            </div>
+            <div class="article-content multi-column-2">
+              <p>
+                In a stunning display of honesty that has sent shockwaves through the development community, senior software engineer Patricia Huang publicly admitted during a code review meeting that she has "absolutely no idea" what her own code from six months ago is supposed to do. The confession came while the team attempted to debug a critical production issue traced back to a function Huang had written last July.
+              </p>
+              <p>
+                "I looked at this function and my first thought was 'who wrote this garbage?'" Huang recounted. "Then I checked the git blame. It was me. I wrote this garbage. Past Patricia apparently decided that 'x,' 'temp,' and 'thing2' were perfectly acceptable variable names. Past Patricia left exactly zero comments explaining why we're converting a date to a string, then back to a date, then to a number." The function in question spans 847 lines and contains what Huang describes as "at least four different coding styles, none of them good."
+              </p>
+              <p>
+                Colleagues expressed solidarity with Huang's situation. "This happens to all of us," said junior developer Mike Chen. "I wrote something last week that I already don't understand." The incident has prompted the team to implement new documentation standards, though senior management has expressed skepticism. "We tried mandatory commenting in 2019," noted CTO Robert Walsh. "People just wrote 'this does the thing' on every function."
+              </p>
+              <p>
+                Huang has since begun a thorough archaeological investigation of her past work. The findings have been disturbing. "I found a try-catch block that catches every possible exception and just... ignores them," she reported. "There's a comment that says 'I'll fix this later' dated from 2019. There's a function called 'doTheThing' that does at least seven things, none of them documented." Most troubling was a section of code with the comment "Don't touch this, it works and I don't know why."
+              </p>
+              <p>
+                The confession has sparked a broader conversation about code documentation and the nature of programming memory. Dr. Sarah Kim, a cognitive scientist who studies developer behavior, explains that this is a universal experience. "Your brain optimizes for the current problem," she said. "The moment you move on to something else, all that context gets garbage collected. By the time you come back, you might as well be looking at someone else's code. Which, in a sense, you are."
+              </p>
+              <p>
+                Several companies have begun experimenting with solutions. One startup has implemented "future-self documentation," requiring developers to write comments as if explaining the code to themselves in six months. Another has introduced "code diaries," where developers record their thought process in video format. The results have been mixed. "The videos help," admitted one participant, "but it's deeply unsettling to watch myself confidently explain code that I now realize is completely wrong."
+              </p>
+              <p>
+                Huang has reportedly begun therapy to address her complicated relationship with her past self's coding decisions. "My therapist says I need to forgive Past Patricia," she shared. "But Past Patricia wrote a recursive function that calls itself for no reason. Forgiveness is difficult." The team eventually fixed the bug by rewriting the entire function from scratch. The new version is fully documented, clearly structured, and includes the comment: "Future Patricia, I'm so sorry for whatever I've done. Please be gentle." Industry experts predict the new code will be equally incomprehensible within three to four months.
+              </p>
+            </div>
+          </article>
+
+        </section>
+        <!-- END ARTICLES SECTION -->
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+          <h3 class="title--big">Trending Now</h3>
+
+          <div class="sidebar-item sidebar-story">
+            <h5>Tech Giants Announce "Mandatory Fun" Policies</h5>
+            <p>
+              Several major technology companies have implemented new workplace policies requiring employees to have fun during designated hours. "We've scheduled fun from 2-3 PM on Wednesdays," explained one HR director. "Attendance is mandatory, and there will be metrics." Early reports indicate employee satisfaction has decreased by 40%.
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Startup Pivots for 47th Time This Quarter</h5>
+            <p>
+              Local startup FutureTech has announced yet another pivot, this time from a cryptocurrency exchange to an AI-powered pet food delivery service. "We believe this is our true calling," said CEO Jake Morrison, who made similar statements about their previous 46 business models. Investors remain cautiously optimistic.
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Developer Claims to Have Read Entire Documentation</h5>
+            <p>
+              In what experts are calling "an unprecedented achievement," software developer Linda Park claims to have read the entire documentation for a library before implementing it. Colleagues remain skeptical. "Nobody does that," said senior engineer Tom Chen. "You just copy the first Stack Overflow answer and pray."
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Meeting That Could Have Been Email Lasts Four Hours</h5>
+            <p>
+              What was described as "a quick sync" extended into a four-hour marathon discussion covering topics ranging from Q3 projections to one attendee's vacation photos. "We never did discuss the original agenda item," admitted organizer Steven Wright. A follow-up meeting has been scheduled to discuss scheduling another meeting.
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Intern Accidentally Deletes Production Database</h5>
+            <p>
+              First-week intern Jessica Mills accidentally deleted the production database while trying to clear her test environment. "The button said 'Delete All' and I thought it meant my stuff," Mills explained. The company's last backup was from 2019. Mills has been promoted to Senior Database Administrator, as she now has more production experience than anyone else.
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Code Review Devolves Into Philosophical Debate</h5>
+            <p>
+              What started as a simple code review has evolved into a three-day debate about the nature of clean code, the meaning of "readable," and whether spaces or tabs represent a fundamental moral choice. Four team members have stopped speaking to each other. The original pull request remains unmerged.
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>WiFi Password Remains Industry's Best Kept Secret</h5>
+            <p>
+              Despite numerous attempts, no employee at TechCorp has successfully obtained the guest WiFi password on the first try. "I've been here five years and I still have to ask three people," said marketing director Amanda Chen. IT has confirmed the password is changed monthly to "something equally impossible to remember."
+            </p>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>Legacy System Celebrates 30th Birthday</h5>
+            <p>
+              The company's core billing system, written in COBOL by a developer who has since passed away, celebrated its 30th birthday this week. "We'd love to replace it," said CTO Robert Park, "but it's the only system that actually works." The system reportedly handles 80% of all transactions and cannot be modified under any circumstances.
+            </p>
+          </div>
+
+          <div class="sidebar-quote">
+            <blockquote>
+              "It works on my machine."
+            </blockquote>
+            <cite>— Every Developer Ever</cite>
+          </div>
+
+          <div class="sidebar-item sidebar-story with-border">
+            <h5>New Hire Asks What "Technical Debt" Means</h5>
+            <p>
+              Recent graduate and new hire Timothy Zhang innocently asked during his first team meeting what "technical debt" means. The room fell silent. Three senior developers began crying. The CTO excused himself to "take a call." Zhang's onboarding has been extended by two weeks to include "trauma preparation training."
+            </p>
+          </div>
+        </div>
+        <!-- END SIDEBAR -->
+
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="newspaper-footer">
+        <div class="footer-content">
+          <div class="footer-section footer-about">
+            <h4>About The Verci Times</h4>
+            <p>The Verci Times has been the leading source of tech industry news and satire since 2026. Our dedicated team of writers works tirelessly to bring you the stories that matter, and some that definitely don't.</p>
+          </div>
+          
+          <div class="footer-section footer-links">
+            <h4>Sections</h4>
+            <ul>
+              <li><a href="#">Front Page</a></li>
+              <li><a href="#">Technology</a></li>
+              <li><a href="#">Opinion</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Archives</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section footer-links">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Advertise</a></li>
+              <li><a href="#">Subscribe</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section footer-contact">
+            <h4>Contact Us</h4>
+            <p>123 Tech Street<br>Silicon Valley, CA 94000</p>
+            <p>Email: editor@vercitimes.com</p>
+            <p>Phone: (555) 123-4567</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2026 The Verci Times. All rights reserved. Any resemblance to actual events or persons is purely coincidental and probably hilarious.</p>
+          <p class="footer-legal">
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Cookie Policy</a>
+          </p>
+        </div>
+      </footer>
+      <!-- END FOOTER -->
+
+    </div>
+  </body>
+</html>
