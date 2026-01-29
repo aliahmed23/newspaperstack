@@ -39,45 +39,36 @@ app.post("/render-issue", (req, res) => {
 });
 
 // render PDF
+// render PDF from provided HTML (no variable injection here)
 app.post("/render-pdf", async (req, res) => {
-  const { title, issueNumber } = req.body;
-
-  let html = fs.readFileSync(
-    path.join(__dirname, "index.html"),
-    "utf-8"
-  );
-
-  html = html
-    .replace("{{TITLE}}", title || "Default Title")
-    .replace("{{ISSUE_NUMBER}}", issueNumber || "1");
-
-  const browser = await chromium.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "networkidle" });
-
-  const pdf = await page.pdf({
-    format: "Letter",
-    printBackground: true,
-    margin: {
-      top: "0.5in",
-      right: "0.5in",
-      bottom: "0.5in",
-      left: "0.5in",
-    },
-  });
-
-  await browser.close();
-
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader(
-    "Content-Disposition",
-    `attachment; filename="Issue-${issueNumber || 1}.pdf"`
-  );
-  res.send(pdf);
-});
+    const { html, issueNumber } = req.body;
+  
+    if (!html || typeof html !== "string") {
+      return res.status(400).json({ ok: false, error: "Missing `html` string in body." });
+    }
+  
+    const browser = await chromium.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+  
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "networkidle" });
+  
+    const pdf = await page.pdf({
+      format: "Letter",
+      printBackground: true,
+      margin: { top: "0.5in", right: "0.5in", bottom: "0.5in", left: "0.5in" },
+    });
+  
+    await browser.close();
+  
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="Issue-${issueNumber || 1}.pdf"`
+    );
+    res.send(pdf);
+  }); 
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
