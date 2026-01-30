@@ -4,11 +4,9 @@
     "type": "module",
     "main": "server.js",
     "scripts": {
-      "start": "node server.js",
-      "postinstall": "npx playwright install chromium"
+      "start": "node server.js"
     },
     "dependencies": {
-      "express": "^4.19.2",
-      "playwright": "^1.42.1"
+      "express": "^4.19.2"
     }
   }
