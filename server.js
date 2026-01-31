@@ -46,10 +46,12 @@ app.post("/render-pdf", async (req, res) => {
         return res.status(500).json({ ok: false, error: "Missing BROWSERLESS_TOKEN env var." });
       }
   
-      const { html } = req.body;
-      if (!html || typeof html !== "string") {
-        return res.status(400).json({ ok: false, error: "Missing `html` string in request body." });
-      }
+      const { title, issueNumber } = req.body;
+  
+      let html = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
+      html = html
+        .replace("{{TITLE}}", title || "Default Title")
+        .replace("{{ISSUE_NUMBER}}", issueNumber || "1");
   
       const browserlessUrl = `https://production-sfo.browserless.io/pdf?token=${token}`;
   
@@ -61,14 +63,9 @@ app.post("/render-pdf", async (req, res) => {
           options: {
             format: "Letter",
             printBackground: true,
-            margin: {
-              top: "0.5in",
-              right: "0.5in",
-              bottom: "0.5in",
-              left: "0.5in",
-            },
-          },
-        }),
+            margin: { top: "0.5in", right: "0.5in", bottom: "0.5in", left: "0.5in" }
+          }
+        })
       });
   
       if (!resp.ok) {
@@ -77,19 +74,22 @@ app.post("/render-pdf", async (req, res) => {
           ok: false,
           error: "Browserless PDF render failed.",
           status: resp.status,
-          details: text.slice(0, 1000),
+          details: text.slice(0, 1000)
         });
       }
   
       const pdfBuffer = Buffer.from(await resp.arrayBuffer());
   
       res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", 'attachment; filename="issue.pdf"');
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="Issue-${issueNumber || 1}.pdf"`
+      );
       res.send(pdfBuffer);
     } catch (err) {
       res.status(500).json({ ok: false, error: err?.message || String(err) });
     }
-});
+  });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
